@@ -20,8 +20,9 @@ def pregunta_01():
     Rta/
     214
 
-    """
-    return
+    x = open("data.csv", "r").readlines()
+    sum= sum([int(k[2]) for k in x])
+    return sum
 
 
 def pregunta_02():

@@ -378,7 +378,7 @@ def pregunta_12():
     a= [k[0][0] for k in x]
     unicos=list(set(a))
     unicos.sort()
-    respuesta=dict.fromkeys(unicos, [])
+    respuesta=dict.fromkeys(unicos, 0)
 
     for k in x:
         df = k.replace("\t", " ").split()

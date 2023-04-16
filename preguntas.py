@@ -48,7 +48,7 @@ def pregunta_02():
     a= [k[0][0] for k in x]
     a.sort()
     resp=[(k,a.count(k)) for k in set(a)]
-
+    resp.sort()
     return resp
 
 
@@ -381,7 +381,7 @@ def pregunta_12():
     respuesta=dict.fromkeys(unicos, [])
 
     for k in x:
-        df = i.replace("\t", " ").split()
+        df = k.replace("\t", " ").split()
         clave = df[0]
         valores= df[4].split(",")
         suma=0

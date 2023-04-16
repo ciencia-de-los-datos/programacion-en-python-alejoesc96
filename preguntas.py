@@ -11,7 +11,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-
+import csv
 
 def pregunta_01():
     """
@@ -19,9 +19,13 @@ def pregunta_01():
 
     Rta/
     214
-
     """
-    return
+    import csv
+    x = open("data.csv", "r").readlines()
+
+    columna= [int(k[2]) for k in x]
+    suma=sum(columna)
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +43,13 @@ def pregunta_02():
     ]
 
     """
-    return
+    import csv
+    x = open("data.csv", "r").readlines()
+    a= [k[0][0] for k in x]
+    a.sort()
+    resp=[(k,a.count(k)) for k in set(a)]
+    resp.sort()
+    return resp
 
 
 def pregunta_03():
@@ -57,8 +67,15 @@ def pregunta_03():
     ]
 
     """
-    return
-
+    x = open("data.csv", "r").readlines()
+    a= [k[0][0] for k in x]
+    b= [int(k[2]) for k in x]
+    unicos=list(set(a))
+    unicos.sort()
+    respuesta=dict.fromkeys(unicos, 0)
+    for k in range(len(x)):
+        respuesta[a[k]] += b[k]
+    return list(zip(respuesta.keys(),respuesta.values()))
 
 def pregunta_04():
     """
@@ -82,7 +99,14 @@ def pregunta_04():
     ]
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    a= [k[9]+k[10] for k in x]
+    a.sort()
+    unicos=list(set(a))
+    unicos.sort()
+    resp=[(k,a.count(k)) for k in unicos]
+
+    return resp
 
 
 def pregunta_05():
@@ -100,7 +124,19 @@ def pregunta_05():
     ]
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    a= [k[0][0] for k in x]
+    b= [int(k[2]) for k in x]
+    unicos=list(set(a))
+    unicos.sort()
+    respuesta_min=dict.fromkeys(unicos, 999999)
+    respuesta_max=dict.fromkeys(unicos, -999999)
+    for k in range(len(x)):
+        if b[k]<respuesta_min[a[k]]:
+            respuesta_min[a[k]] = b[k]
+        if b[k]>respuesta_max[a[k]]:
+            respuesta_max[a[k]]= b[k]
+    return list(zip(respuesta_min.keys(),respuesta_max.values(),respuesta_min.values()))
 
 
 def pregunta_06():
@@ -125,7 +161,25 @@ def pregunta_06():
     ]
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    min={}
+    max={}
+    for j in x:
+        df = j.replace("\t", " ").split()
+        df=df[4].split(",")
+        for k in df:
+            clave ,numero = k.split(":")
+            if clave in min:
+                if min[clave] > int(numero):
+                    min[clave] = int(numero)
+                elif max[clave] < int(numero):
+                    max[clave] = int(numero)
+            else:
+                min[clave] = int(numero)
+                max[clave] = int(numero)
+    respuesta=list(zip(min.keys(),min.values(),max.values()))
+    respuesta.sort()
+    return respuesta
 
 
 def pregunta_07():
@@ -149,8 +203,19 @@ def pregunta_07():
     ]
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    b= [k[0][0] for k in x]
+    a= [int(k[2]) for k in x]
+    unicos=list(set(a))
+    unicos.sort()
+    respuesta=dict.fromkeys(unicos, [])
 
+    for k in range(len(x)):
+        lista=respuesta[a[k]]+[b[k]]
+        respuesta[a[k]]=lista
+    return list(zip(respuesta.keys(),respuesta.values()))
+
+#print(pregunta_07())
 
 def pregunta_08():
     """
@@ -174,7 +239,24 @@ def pregunta_08():
     ]
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    b= [k[0][0] for k in x]
+    a= [int(k[2]) for k in x]
+    unicos=list(set(a))
+    unicos.sort()
+    respuesta=dict.fromkeys(unicos, [])
+    print(type(respuesta[1]))
+
+    for k in range(len(x)):
+        lista=respuesta[a[k]]+[b[k]]
+        respuesta[a[k]]=lista
+    lista_aux=list(respuesta.values())
+    for k in range (len(lista_aux)):
+        lista_aux[k]=list(set(lista_aux[k]))
+        lista_aux[k].sort()
+        respuesta[k]=lista_aux[k]
+    
+    return list(zip(respuesta.keys(),respuesta.values()))
 
 
 def pregunta_09():
@@ -197,7 +279,20 @@ def pregunta_09():
     }
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    respuesta={}
+
+    for k in x:
+        fila = k.replace("\t", " ").split()
+        df = fila[4].split(",")
+        for j in df:
+            clave, numero = j.split(":")
+            if clave not in respuesta:
+                respuesta[clave]=1
+            else:
+                respuesta[clave] += 1
+    respuesta=dict(sorted(respuesta.items()))
+    return respuesta
 
 
 def pregunta_10():
@@ -218,7 +313,16 @@ def pregunta_10():
 
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    columna1=[]
+    columna2=[]
+    columna3=[]
+    for k in x:
+        df = k.replace("\t", " ").split()
+        columna1.append(df[0])
+        columna2.append(len(df[3].split(",")))
+        columna3.append(len(df[4].split(",")))
+    return list(zip(columna1, columna2, columna3))
 
 
 def pregunta_11():
@@ -239,7 +343,20 @@ def pregunta_11():
 
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    respuesta = {}
+    for k in x:
+        df= k.replace("\t", " ").split()
+        claves = df[3].split(",")
+        valor = int(df[1])
+        for j in claves:
+            if j in respuesta:
+                respuesta[j] += valor
+            else:
+                respuesta[j] = valor
+
+    respuesta = dict(sorted(respuesta.items()))
+    return respuesta
 
 
 def pregunta_12():
@@ -257,4 +374,18 @@ def pregunta_12():
     }
 
     """
-    return
+    x = open("data.csv", "r").readlines()
+    a= [k[0][0] for k in x]
+    unicos=list(set(a))
+    unicos.sort()
+    respuesta=dict.fromkeys(unicos, 0)
+
+    for k in x:
+        df = k.replace("\t", " ").split()
+        clave = df[0]
+        valores= df[4].split(",")
+        suma=0
+        for j in valores:
+            suma += int(j.split(":")[1])
+        respuesta[clave] += suma
+    return respuesta
